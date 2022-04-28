@@ -1,34 +1,54 @@
 import { useEffect, useState } from "react";
 import { apiConsumer } from "../../services/apiConsumer";
+import { Search } from "../Search/Search";
 
 export const Home = () => {
-  const urlTowns = "https://www.el-tiempo.net/api/json/v1/municipios";
-  const movies = "https://api-restfull-movies-nodejs.herokuapp.com/movies";
+  const [cityWeather, setCityWeather] = useState();
 
-  const [towns, setTowns] = useState([]);
   useEffect(() => {
-    const loadTowns = async () => {
+    const loadCityWeather = async () => {
       try {
-        const towns = await apiConsumer.getTowns();
-        console.log(towns, ' towns in useEffect')
-        setTowns(towns);
+        const infoWeather = await apiConsumer.getWeather("Barcelona");
+        console.log(infoWeather, "infoWeather in useEffect");
+        setCityWeather(infoWeather);
       } catch (error) {
-        console.log(error, "Error in loadTowns");
+        console.log(error, `Error getting weather of city`);
       }
     };
-    loadTowns();
+    loadCityWeather();
   }, []);
+  
+let formatedDate;
+let icon;
+// import icon from "../../../"
+
+  if (cityWeather){
+    formatedDate = new Date(cityWeather.list[0].dt * 1000).toLocaleString(
+    "es-ES",
+    {
+      timeStyle: "short",
+      dateStyle: "long",
+    })
+    icon = cityWeather.list[0].weather[0].icon;
+    console.log(cityWeather.list[0].dt * 1000, "infoWeather antes del return");
+  }
+  
   return (
     <div>
-      <div className="home-container">
-        <div className="city">Leganes</div>
-        <div className="temperature">12ºC</div>
-        <div>Rain</div>
-        <div>Max. 17º Min. 10º</div>
-        <div>amanecer: 6am Anochecher: 21pm</div>
-
-        <div>Previsiones proximos dias</div>
-      </div>
+      {cityWeather && (
+        <div className="home-container">
+          <Search />
+          <div className="city">{cityWeather.list[0].name}</div>
+          <div className="temperature">{Math.floor(cityWeather.list[0].main.temp)}</div>
+          <div>{cityWeather.list[0].weather[0].description}</div>
+          <div>
+            <span>{Math.round(cityWeather.list[0].main.temp_min)}</span>
+            {Math.round(cityWeather.list[0].main.temp_max)}
+          </div>
+          <div>{formatedDate}</div>
+          <div><img src=""></img> </div>
+        </div>
+      )}
     </div>
   );
 };
