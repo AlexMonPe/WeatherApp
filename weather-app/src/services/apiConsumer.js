@@ -1,30 +1,19 @@
 export const apiConsumer = {
-  getTowns: async () => {
+  getWeather: async (city) => {
     try {
-      const towns = await fetch(
-        "https://www.el-tiempo.net/api/json/v1/municipios",
-        {
-          method: "GET",
-        }
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
+          "X-RapidAPI-Key":
+            "bfb8f461admsh74b33ce9b2fc475p12072cjsna2302dbe2447",
+        },
+      };
+      const weatherInfo = await fetch(
+        `https://community-open-weather-map.p.rapidapi.com/find?q=${city}&units=metric&lang=sp`,
+        options
       );
-      const townsData = await towns.json();
-      console.log(townsData, "townsdata");
-      return townsData;
-    } catch (error) {
-      console.log(error, "Error in getTowns");
-    }
-  },
-  getWeatherOfTown:  async (idProvince, idTown) => {
-    try {
-      const towns = await fetch(
-        `https://www.el-tiempo.net/api/json/v2/provincias/${idProvince}/municipios/${idTown}`,
-        {
-          method: "GET",
-        }
-      );
-      const townsData = await towns.json();
-      console.log(townsData, "townsdata");
-      return townsData;
+      return await weatherInfo.json();
     } catch (error) {
       console.log(error, "Error in getTowns");
     }
