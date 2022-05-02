@@ -5,16 +5,18 @@
   justify-content: center;
   min-height: 100vh;
   .city {
-    font-size: 3em;
     text-shadow: 2px 2px 4px rgba(71, 70, 70, 0.846);
     font-size: 3em;
-    background: #a5a5a57a;
     padding: 1em;
     border-radius: 2rem;
   }
   .temperature {
     font-size: 5em;
     text-shadow: 2px 2px 4px rgba(71, 70, 70, 0.846);
+  }
+  img{
+    width: 2em;
+    height: 2em;
   }
 }
 .search {
@@ -34,4 +36,12 @@
   width: auto;
   justify-content: space-evenly;
   font-size: 20px;
+}
+.tempsMaxMin{
+  display: flex;
+    flex-direction: row;
+    gap: 4em;
+    background-color: #64c7bd85;
+    padding: 1em;
+    border-radius: 17px;
 }
