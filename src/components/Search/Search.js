@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { apiConsumer } from "../../services/apiConsumer";
+import { BsSearch } from "react-icons/bs";
+import {FaTemperatureHigh, FaTemperatureLow } from "react-icons/fa"
 
 export const Search = () => {
   const [searchCity, setSearchCity] = useState();
   const [cityWeather, setCityWeather] = useState();
+  let container = document.getElementById("search-container");
 
   const loadCityWeather = async (event) => {
     try {
@@ -30,13 +33,23 @@ export const Search = () => {
     );
     icon = cityWeather.list[0].weather[0].icon;
     console.log(cityWeather.list[0].dt * 1000, "infoWeather antes del return");
+    const hour = new Date(cityWeather.list[0].dt * 1000).getHours();
+    console.log(hour, "horaa");
+    if (hour >6 && hour <20){
+      container.classList.remove("night");
+      container.classList.add("day");
+
+    }else {
+      container.classList.remove("day");
+      container.classList.add("night");
+    }
   }
 
   let iconRoute = `./src/assets/icons/${icon}.png`;
 
   return (
     <div>
-      <div className="search-container">
+      <div className="search-container night" id="search-container">
         <input
           className="search"
           type="search"
@@ -46,11 +59,10 @@ export const Search = () => {
           onChange={(event) => setSearchCity(event.target.value)}
           onKeyPress={loadCityWeather}
         ></input>
-  
+        <button onClick={loadCityWeather({key: "Enter"})} ><BsSearch /></button> 
         {cityWeather && (
           <div className="search-data">
             <div className="city">{cityWeather.list[0].name}</div>
-            <img src="public\images\clouds.jpg" alt="logo"></img>
             <div className="temperature">
               {Math.floor(cityWeather.list[0].main.temp)}ºC
             </div>
@@ -58,11 +70,11 @@ export const Search = () => {
             <div>
               <img src={iconRoute}></img>
             </div>
-            <div className="tempsMaxMin">
-              <p>Máx : {Math.round(cityWeather.list[0].main.temp_max)} ºC</p>
-              <p>Mín : {Math.round(cityWeather.list[0].main.temp_min)} ºC</p>
-            </div>
             <div>{formatedDate}</div>
+            <div className="tempsMaxMin">
+              <p>Máx : {Math.round(cityWeather.list[0].main.temp_max)} ºC <FaTemperatureHigh /></p>
+              <p>Mín : {Math.round(cityWeather.list[0].main.temp_min)} ºC <FaTemperatureLow /></p>
+            </div>
           </div>
         )}
       </div>
