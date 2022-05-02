@@ -2,31 +2,72 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
+  padding: 1em;
   .city {
     text-shadow: 2px 2px 4px rgba(71, 70, 70, 0.846);
-    font-size: 3em;
-    padding: 1em;
+    font-size: 2.5em;
     border-radius: 2rem;
+    //@include text_shadow(2.5em)
   }
+  // @mixin text_shadow($fontSize) {
+  //   font-size: $fontSize;
+  //   text-shadow: 2px 2px 4px rgba(71, 70, 70, 0.846);
+
+  // }
   .temperature {
-    font-size: 5em;
+    font-size: 4em;
     text-shadow: 2px 2px 4px rgba(71, 70, 70, 0.846);
   }
-  img{
+  img {
     width: 2em;
     height: 2em;
+  }
+  button{
+    position: fixed;
+    padding: 4px;
+    border: none;
+    border-radius: 1px;
+    left: 14rem;
+    top: 34px;
+    cursor: pointer;
+    background-color: #ffffff00;
+  }
+  svg{
+    font-size: 19px;
+  }
+}
+.day {
+  background-image: url("../../../public/images/home_bg.jpg");
+  background-size: cover;
+  min-height: 100vh;
+}
+.night{
+  background-image: url("../../../public/images/night.jpg");
+  background-size: cover;
+  min-height: 100vh;
+}
+.search-container.night {
+  color: white;
+  .search{
+    box-shadow: 0px 0px 12px 3px #6a2367;
+  }
+  .search:hover{
+    background-color: rgba(255, 255, 255, 0.758);
+  }
+  .tempsMaxMin{
+    background-color: #67156485;
   }
 }
 .search {
   padding: 1em;
   font-size: 20px;
-  background-color: #ffffff78;
   border-radius: 2rem;
   border: none;
+  background-color: #ffffff99;
   text-align: center;
-  box-shadow: 0px 0px 12px 3px #888787;
+  box-shadow: 0px 0px 12px 3px #325098;
 }
 .search-data {
   display: flex;
@@ -36,12 +77,13 @@
   width: auto;
   justify-content: space-evenly;
   font-size: 20px;
+  font-family: serif;
 }
-.tempsMaxMin{
+.tempsMaxMin {
   display: flex;
-    flex-direction: row;
-    gap: 4em;
-    background-color: #64c7bd85;
-    padding: 1em;
-    border-radius: 17px;
+  flex-direction: row;
+  gap: 4em;
+  background-color: #64c7bd85;
+  padding: 1em;
+  border-radius: 17px;
 }
